@@ -38,8 +38,8 @@ describe 'homes' do
   end
   
   context 'configure the user and public key' do
-    describe 'pass variables to homes::config' do
-      let(:title) { "unsupported os" }
+    describe 'pass variables to homes::home' do
+      let(:title) { "configure the user and public key" }
       let :params do 
         { 'user' =>  myuser, 'ssh_key' => 'xxx' }
       end
@@ -47,8 +47,24 @@ describe 'homes' do
         :osfamily => 'Debian'
       }}
       
-      it { should contain_homes__config('create home for testuser') }
+      it { should contain_homes__home('create home for testuser') }
+      it { should contain_homes__ssh__public('auth_keys for testuser') }
     end
+  end
+  
+  context 'configure the user without a public key' do
+    describe 'pass variables to homes::home' do
+      let(:title) { "configure the user without a public key" }
+      let :params do 
+        { 'user' =>  myuser }
+      end
+      let(:facts) {{
+        :osfamily => 'Debian'
+      }}
+      
+      it { should contain_homes__home('create home for testuser') }
+      it { should_not contain_homes__ssh__public('auth_keys for testuser') }
+    end    
   end
   
 end
