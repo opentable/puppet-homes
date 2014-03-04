@@ -1,0 +1,54 @@
+require 'spec_helper'
+
+describe 'homes' do
+  
+  myuser = { 
+    'testuser' => { 'groups' => ['testgroup1', 'testgroup2'] }
+  }
+  
+  context 'supported operating systems' do
+    ['Debian', 'RedHat'].each do |osfamily|
+      describe "homes class without any parameters on #{osfamily}" do
+        let(:title) { "supported os" }
+        let :params do 
+          { 'user' =>  myuser, 'ssh_key' => 'xxx' }
+        end
+        let(:facts) {{
+          :osfamily => osfamily,
+        }}
+
+        it { should compile.with_all_deps }
+      end
+    end
+  end
+
+  context 'unsupported operating system' do
+    describe 'homes class without any parameters on Solaris/Nexenta' do
+      let(:title) { "unsupported os" }
+      let :params do 
+        { 'user' =>  myuser, 'ssh_key' => 'xxx' }
+      end
+      let(:facts) {{
+        :osfamily        => 'Solaris',
+        :operatingsystem => 'Nexenta',
+      }}
+
+      it { expect { should have_resource_count(1) }.to raise_error(Puppet::Error, /Nexenta not supported/) }
+    end
+  end
+  
+  context 'configure the user and public key' do
+    describe 'pass variables to homes::config' do
+      let(:title) { "unsupported os" }
+      let :params do 
+        { 'user' =>  myuser, 'ssh_key' => 'xxx' }
+      end
+      let(:facts) {{
+        :osfamily => 'Debian'
+      }}
+      
+      it { should contain_homes__config('create home for testuser') }
+    end
+  end
+  
+end
