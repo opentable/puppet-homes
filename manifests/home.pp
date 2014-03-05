@@ -1,6 +1,6 @@
 # == Define Resource Type: homes::home
 #
-# This private definition will create the user and 
+# This private definition will create the user and
 # manage the home directory
 #
 # === Parameters
@@ -13,33 +13,32 @@
 # manage the user.
 #
 define homes::home(
-  $ensure = 'present',
-  $user
+  $user,
+  $ensure = 'present'
 ) {
 
   $username = keys($user)
 
   if $ensure == 'present' {
-    
-	create_resources(user, $user)
+
+    create_resources(user, $user)
 
     file { "/home/${username}":
-      ensure => directory,
-      owner  => $username,
-      mode   => '0600',
-	  require => User[$username]
+      ensure  => directory,
+      owner   => $username,
+      mode    => '0600',
+      require => User[$username]
     }
-	
+
   } else {
-    
-	user { $username:
-	  ensure => absent
-	}
-	
-	
-	file { "/home/${username}":
+
+    user { $username:
       ensure => absent
     }
-	
+
+    file { "/home/${username}":
+      ensure => absent
+    }
+
   }
 }

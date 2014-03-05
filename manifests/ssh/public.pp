@@ -8,7 +8,7 @@
 # String, required parameter. The name of the user that will be managed.
 #
 # [*ssh_key*]
-# String, default empty. If given, this will be used to populate the authorized_keys 
+# String, default empty. If given, this will be used to populate the authorized_keys
 # file for the given user.
 #
 # === Examples
@@ -24,7 +24,7 @@ define homes::ssh::public(
   $username,
   $ssh_key
 ) {
-	
+
     file { "/home/${username}/.ssh":
       ensure  => directory,
       owner   => $username,

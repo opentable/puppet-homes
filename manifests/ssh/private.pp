@@ -14,7 +14,7 @@
 #
 # [*key_store*]
 # String, required parameter. The full path to the directory that stores
-# the private key. 
+# the private key.
 #
 # === Examples
 #
@@ -27,15 +27,15 @@
 # }
 #
 define homes::ssh::private(
-$key_name = $name,
-$username,
-$key_store
+  $username,
+  $key_store,
+  $key_name = $name
 ) {
-	
-	file { "/home/${username}/.ssh/${key_name}":
-	  ensure => present,
-	  source => "${key_store}/${key_name}",
-	  mode => '0600',
-	  require => File["/home/${username}/.ssh"]
-	}
+
+    file { "/home/${username}/.ssh/${key_name}":
+      ensure  => present,
+      source  => "${key_store}/${key_name}",
+      mode    => '0600',
+      require => File["/home/${username}/.ssh"]
+    }
 }
