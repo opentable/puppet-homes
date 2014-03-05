@@ -6,7 +6,7 @@ describe 'homes::ssh::private', :type => :define do
     describe 'pull the private key from locally mapped keystore' do
       let :title do "private key" end
       let :params do 
-        { 'name' => 'keyfile_rsa', 'username' => 'testuser', 'keystore' =>  '/var/lib/ot-keystore' }
+        { 'username' => 'testuser', 'key_name' => 'keyfile_rsa', 'key_store' =>  '/var/lib/ot-keystore' }
       end
       
       it { should contain_file('/home/testuser/.ssh/keyfile_rsa').with(

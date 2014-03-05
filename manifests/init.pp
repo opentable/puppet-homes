@@ -1,11 +1,32 @@
-# == Define: homes
+# == Define Resource Type: homes
 #
-# Full description of definition homes here.
+# This will create a local system user and manage their home directory.
+# Optionally it will also manage distrubution of the public ssh key if
+# it is provided.
+#
+# === Requirements/Dependencies
+# 
+# Currently reequires the puppetlabs/stdlib module on the Puppet Forge in
+# order to validate much of the the provided configuration.
 #
 # === Parameters
 #
-# [*sample_parameter*]
-#   Explanation of what this parameter affects and what it defaults to.
+# [*user*]
+# Hash, required parameter. If given the key-value pair will be used to create and
+# manage the user.
+#
+# [*ssh_key*]
+# String, default empty. If given, this will be used to populate the authorized_keys 
+# file for the given user.
+#
+#
+# === Examples
+#
+# Create a user with the provided public ssh key:
+#
+# homes { 'testuser'
+#  ssh_key => 'AAAAB3NzaC1yc2EAAAADAQABAAAAgQC4U/G9Idqy1VvYEDCKg3noVChCbIrJAi0D/qMFoG=='
+# }
 #
 define homes (
 $user,

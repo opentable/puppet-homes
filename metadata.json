@@ -1,0 +1,34 @@
+{
+  "operatingsystem_support": [
+    {
+      "osfamily": [
+        "Debian",
+        "RedHat"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "pe",
+      "version_requirement": "3.2.x"
+    },
+    {
+      "name": "puppet",
+      "version_requirement": "3.x"
+    }
+  ],
+  "name":         "opentable-homes",
+  "version":      "0.1.0",
+  "source":       "git://github.com/opentable/puppet-homes.git",
+  "author":       "opentable",
+  "summary":      "Module for managing local users and ssh keys",
+  "description":  "Create local system users and manage their public/private ssh keys",
+  "project_page": "https://github.com/opentable/puppet-homes",
+  "license":      "MIT",
+  "dependencies": [
+    {
+	  "name": "puppetlabs/stdlib",
+	  "version_requirement": ">= 3.0.0"  	
+	}
+  ]
+}

@@ -1,7 +1,7 @@
 ####Table of Contents
 
 1. [Overview](#overview)
-2. [Module Description - What the module does and why it is useful](#module-description)
+2. [Module Description - What is the homes module?](#module-description)
 3. [Setup - The basics of getting started with homes](#setup)
     * [What homes affects](#what-homes-affects)
     * [Setup requirements](#setup-requirements)
@@ -13,48 +13,91 @@
 
 ##Overview
 
-A one-maybe-two sentence summary of what the module does/what problem it solves. This is your 30 second elevator pitch for your module. Consider including OS/Puppet version it works with.       
+The homes module allows you to create local system users and optionally manage their ssh keys  
 
 ##Module Description
 
-If applicable, this section should have a brief description of the technology the module integrates with and what that integration enables. This section should answer the questions: "What does this module *do*?" and "Why would I use it?"
-
-If your module has a range of functionality (installation, configuration, management, etc.) this is the time to mention it.
+This module provides a simplified way of managing local and system users, their home directory and optionally the distrubition of their public and private ssh keys.
 
 ##Setup
 
 ###What homes affects
 
-* A list of files, packages, services, or operations that the module will alter, impact, or execute on the system it's installed on.
-* This is a great place to stick any warnings.
-* Can be in list or paragraph form. 
+* Create users
+* Populates authorized_keys file for the given user.
 
-###Setup Requirements **OPTIONAL**
-
-If your module requires anything extra before setting up (pluginsync enabled, etc.), mention it here. 
 
 ###Beginning with homes
 
-The very basic steps needed for a user to get the module up and running. 
+To create a new local user:
 
-If your most recent release breaks compatibility or requires particular steps for upgrading, you may wish to include an additional section here: Upgrading (For an example, see http://forge.puppetlabs.com/puppetlabs/firewall).
+```puppet
+  homes { 'testuser': }
+```
+
+To create a new local user and manage their public ssh_key:
+
+```puppet
+   homes { 'testuser'
+    ssh_key => 'AAAAB3NzaC1yc2EAAAADAQABAAAAgQC4U/G9Idqy1VvYEDCKg3noVChCbIrJAi0D/qMFoG=='
+   }
+```
 
 ##Usage
 
-Put the classes, types, and resources for customizing, configuring, and doing the fancy stuff with your module here. 
+###Classes and Defined Types
+
+####Defined Type: `homes`
+The homes module primary type, `homes`, guides the basic setup of local users on your system.
+
+**Parameters within `homes`:**
+#####`user`
+A hash giving details of the user that will be managed.
+
+#####`ssh_key`
+The ssh_key is the one-line contents of the users public key. This will be used to populate the authorized_keys file in the .ssh directory of the users home directory.
+
+####Defined Type: `homes::ssh::private`
+The type for managing the distrubution of private keys from an existing key store.
+
+**Parameters within `homes::ssh::private`:**
+#####`username`
+The name of the user that is being managed by this module.
+
+#####`key_name`
+The name of the private key as found in the existing key store.
+
+#####`key_store`
+The full path directory to the keystore where all the public keys and other secrets are located.
 
 ##Reference
 
-Here, list the classes, types, providers, facts, etc contained in your module. This section should include all of the under-the-hood workings of your module so people know what the module is touching on their system but don't need to mess with things. (We are working on automating this section!)
+###Defined Types
+####Public Types
+* [`homes`](#defined-homes): Guides the basic management of users.
+* [`homes::ssh::private`](#defined-sshprivate): Management of a users private ssh key.
+
+####Private Types
+* [`homes::homes`]: Create the user and manage the home directory.
+* [`homes::ssh::public`](#defined-sshpublic): Management of a users public ssh key.
 
 ##Limitations
 
-This is where you list OS compatibility, version compatibility, etc.
+This module is CI tested on Centos 5 & 6, Ubuntu 12.04 with OSS version Puppet only.
 
 ##Development
 
-Since your module is awesome, other users will want to play with it. Let them know what the ground rules for contributing are.
+###Contributing
 
-##Release Notes/Contributors/Etc **Optional**
+Please read CONTRIBUTING.md for full details on contributing to this project.
 
-If you aren't using changelog, put your release notes here (though you should consider using changelog). You may also add any additional sections you feel are necessary or important to include here. Please use the `## ` header. 
+###Running tests
+
+This project contains tests for both [rspec-puppet](http://rspec-puppet.com/) and [rspec-system-puppet](https://github.com/puppetlabs/rspec-system-puppet) to verify functionality. For in-depth information please see their respective documentation.
+
+Quickstart:
+
+    gem install bundler
+    bundle install
+    bundle exec rake spec
+

@@ -25,8 +25,6 @@ describe 'homes::home', :type => :define do
         'owner'  => 'testuser',
         'mode'   => '0600',
       )}
-      
-      #TODO: add ensure
     end
   end
   
