@@ -23,7 +23,7 @@ describe 'homes::home', :type => :define do
       it { should contain_file('/home/testuser').with(
         'ensure' => 'directory',
         'owner'  => 'testuser',
-        'mode'   => '0600',
+        'mode'   => '0600'
       )}
     end
   end
