@@ -1,3 +1,4 @@
+#!/usr/bin/env sh
 
 bundle exec rake syntax
 bundle exec rake lint
