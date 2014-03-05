@@ -26,13 +26,19 @@ define homes::home(
     file { "/home/${username}":
       ensure => directory,
       owner  => $username,
-      mode   => '0600'
+      mode   => '0600',
+	  require => User[$username]
     }
 	
   } else {
     
+	user { $username:
+	  ensure => absent
+	}
+	
+	
 	file { "/home/${username}":
-      ensure => absent,
+      ensure => absent
     }
 	
   }

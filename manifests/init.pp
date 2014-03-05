@@ -11,6 +11,9 @@
 #
 # === Parameters
 #
+# [*ensure*]
+# Manage the presence of the user and home directory.
+#
 # [*user*]
 # Hash, required parameter. If given the key-value pair will be used to create and
 # manage the user.
@@ -30,7 +33,8 @@
 #
 define homes (
 $user,
-$ssh_key=''
+$ssh_key='',
+$ensure='present'
 ) {
 
 	validate_re($osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")
@@ -39,7 +43,8 @@ $ssh_key=''
 	$username = keys($user)
 	
 	homes::home { "create home for ${username}":
-	  user => $user
+	  ensure => $ensure,
+	  user   => $user
     }
 	
 	if $ssh_key != '' {

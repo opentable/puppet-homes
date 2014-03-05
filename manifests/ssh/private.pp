@@ -35,6 +35,7 @@ $key_store
 	file { "/home/${username}/.ssh/${key_name}":
 	  ensure => present,
 	  source => "${key_store}/${key_name}",
-	  mode => '0600'
+	  mode => '0600',
+	  require => File["/home/${username}/.ssh"]
 	}
 }

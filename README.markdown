@@ -32,7 +32,13 @@ This module provides a simplified way of managing local and system users, their 
 To create a new local user:
 
 ```puppet
-  homes { 'testuser': }
+   $myuser = { 
+     'testuser' => { 'groups' => ['testgroup1', 'testgroup2'] }
+   }
+      
+   homes { 'testuser':
+     user => $myuser
+   }
 ```
 
 To create a new local user and manage their public ssh_key:
@@ -78,12 +84,12 @@ The full path directory to the keystore where all the public keys and other secr
 * [`homes::ssh::private`](#defined-sshprivate): Management of a users private ssh key.
 
 ####Private Types
-* [`homes::homes`]: Create the user and manage the home directory.
+* [`homes::home`](#defined-home): Create the user and manage the home directory.
 * [`homes::ssh::public`](#defined-sshpublic): Management of a users public ssh key.
 
 ##Limitations
 
-This module is CI tested on Centos 5 & 6, Ubuntu 12.04 with OSS version Puppet only.
+This module is CI tested on Centos 6, Ubuntu 12.04 with OSS version Puppet only.
 
 ##Development
 
@@ -100,4 +106,5 @@ Quickstart:
     gem install bundler
     bundle install
     bundle exec rake spec
+	RS_DEBUG=yes bundle exec rspec spec/acceptance
 
