@@ -5,29 +5,18 @@ rvm:
   - 1.8.7
   - 1.9.3
   - 2.0.0
-script: ./build.sh
+script: bundle exec rake test
 env:
-  - PUPPET_VERSION="~> 2.7.0" RS_SET=ubuntu-server-12042-x64
-  - PUPPET_VERSION="~> 2.7.0" RS_SET=centos-64-x64
-  - PUPPET_VERSION="~> 3.1.0" RS_SET=ubuntu-server-12042-x64
-  - PUPPET_VERSION="~> 3.1.0" RS_SET=centos-64-x64
-  - PUPPET_VERSION="~> 3.2.0" RS_SET=ubuntu-server-12042-x64
-  - PUPPET_VERSION="~> 3.2.0" RS_SET=centos-64-x64
-  - PUPPET_VERSION="~> 3.3.0" RS_SET=ubuntu-server-12042-x64 
-  - PUPPET_VERSION="~> 3.3.0" RS_SET=centos-64-x64
-  - PUPPET_VERSION="~> 3.4.0" RS_SET=ubuntu-server-12042-x64
-  - PUPPET_VERSION="~> 3.4.0" RS_SET=centos-64-x64
+  - PUPPET_VERSION="~> 2.7.0"
+  - PUPPET_VERSION="~> 3.1.0"
+  - PUPPET_VERSION="~> 3.2.0"
+  - PUPPET_VERSION="~> 3.3.0" 
+  - PUPPET_VERSION="~> 3.4.0"
 matrix:
   exclude:
   - rvm: 2.0.0
-    env: PUPPET_VERSION="~> 2.7.0" RS_SET=ubuntu-server-12042-x64
+    env: PUPPET_VERSION="~> 2.7.0"
   - rvm: 2.0.0
-    env: PUPPET_VERSION="~> 2.7.0" RS_SET=centos-64-x64
-  - rvm: 2.0.0
-    env: PUPPET_VERSION="~> 3.1.0" RS_SET=ubuntu-server-12042-x64
-  - rvm: 2.0.0
-    env: PUPPET_VERSION="~> 3.1.0" RS_SET=centos-64-x64
+    env: PUPPET_VERSION="~> 3.1.0"
   - rvm: 1.9.3
-    env: PUPPET_VERSION="~> 2.7.0" RS_SET=ubuntu-server-12042-x64
-  - rvm: 1.9.3
-    env: PUPPET_VERSION="~> 2.7.0" RS_SET=centos-64-x64
+    env: PUPPET_VERSION="~> 2.7.0"
