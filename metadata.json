@@ -1,11 +1,7 @@
 {
   "operatingsystem_support": [
-    {
-      "osfamily": [
-        "Debian",
-        "RedHat"
-      ]
-    }
+    { "operatingsystem": "RedHat" },
+	{ "operatingsystem": "Debian" }
   ],
   "requirements": [
     {
