@@ -38,7 +38,7 @@ define homes::ssh::public(
       target  => "/home/${username}/.ssh/authorized_keys",
       type    => 'ssh-rsa',
       user    => $username,
-      require => User[$username]
+      require => File["/home/${username}/.ssh"]
     }
 
     file { "/home/${username}/.ssh/authorized_keys":

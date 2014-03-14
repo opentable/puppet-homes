@@ -21,18 +21,17 @@ define homes::home(
 
   if $ensure == 'present' {
 
-    create_resources("@user", $user)
+    create_resources(user, $user)
 
     file { "/home/${username}":
       ensure  => directory,
       owner   => $username,
-      mode    => '0600',
-      require => User[$username]
+      mode    => '0600'
     }
 
   } else {
 
-    @user { $username:
+    user { $username:
       ensure => absent
     }
 
