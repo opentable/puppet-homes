@@ -22,7 +22,8 @@
 #
 define homes::ssh::public(
   $username,
-  $ssh_key
+  $ssh_key,
+  $ssh_key_type
 ) {
 
     file { "/home/${username}/.ssh":
@@ -36,7 +37,7 @@ define homes::ssh::public(
       ensure  => present,
       key     => $ssh_key,
       target  => "/home/${username}/.ssh/authorized_keys",
-      type    => 'ssh-rsa',
+      type    => $ssh_key_type,
       user    => $username,
       require => File["/home/${username}/.ssh"]
     }

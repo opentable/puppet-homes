@@ -27,5 +27,6 @@ describe 'homes::home', :type => :define do
       )}
     end
   end
-  
+
 end
+
