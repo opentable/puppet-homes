@@ -25,6 +25,10 @@
     {
 	  "name": "puppetlabs/stdlib",
 	  "version_requirement": ">= 3.0.0"  	
-	}
+	},
+    {
+        "name": "opentable/altlib",
+        "version_requirement": ">= 0.0.1"
+    }
   ]
 }

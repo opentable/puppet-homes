@@ -7,3 +7,4 @@ description   'Create local system users and manage their public/private ssh key
 project_page 'https://github.com/opentable/puppet-homes'
 license       'MIT'
 dependency    'puppetlabs/stdlib', '>=3.0.0'
+dependency    'opentable/altlib', '>=0.0.1'

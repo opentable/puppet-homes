@@ -1,5 +1,6 @@
 fixtures:
   repositories:
-    stdlib: "git://github.com/puppetlabs/puppetlabs-stdlib.git"
+    stdlib: "https://github.com/puppetlabs/puppetlabs-stdlib.git"
+    altltb: "https://github.com/opentable/puppet-altlib.git"
   symlinks:
     homes: "#{source_dir}"

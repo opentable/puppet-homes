@@ -17,11 +17,26 @@ define homes::home(
   $ensure = 'present'
 ) {
 
-  $username = keys($user)
+  $username = join(keys($user),',')
+
+  # Deal with the case where certain groups don't exist on all OS versions
+  case $::osfamily {
+    'Debian': {
+      $new_groups = delete(sub_item(sub_item($user, $username),'groups'),'wheel')
+      $new_user = replace_hash($user,{ 'groups' => $new_groups })
+    }
+    'RedHat': {
+      $new_groups = delete(sub_item(sub_item($user, $username),'groups'),'sudo')
+      $new_user = replace_hash($user,{ 'groups' => $new_groups })
+    }
+    default: {
+      $new_user = $user
+    }
+  }
 
   if $ensure == 'present' {
 
-    create_resources(user, $user)
+    create_resources(user, $new_user)
 
     file { "/home/${username}":
       ensure  => directory,
