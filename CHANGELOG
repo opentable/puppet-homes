@@ -1,2 +1,8 @@
-YYYY-MM-DD Release 0.1.0
+2014-03-21 0.2.0
+- fixed issue with sudo/wheel groups being applied on different operating systems
+- adding support for dsa keys
+- adding tests with beaker
+- improved the documentation
+
+2014-03-06 Release 0.1.0
 - initial release
