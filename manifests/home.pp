@@ -51,7 +51,9 @@ define homes::home(
     }
 
     file { "/home/${username}":
-      ensure => absent
+      ensure => absent,
+      force  => true,
+      backup => false
     }
 
   }

@@ -34,7 +34,7 @@ describe 'homes::ssh::public', :type => :define do
       it { should contain_file('/home/testuser/.ssh/authorized_keys').with(
         'ensure' => 'present',
         'owner'  => 'testuser',
-        'mode'   => '0644'
+        'mode'   => '0600'
       )}
     end
 
@@ -55,7 +55,7 @@ describe 'homes::ssh::public', :type => :define do
       it { should contain_file('/home/testuser/.ssh/authorized_keys').with(
         'ensure' => 'present',
         'owner'  => 'testuser',
-        'mode'   => '0644'
+        'mode'   => '0600'
       )}
     end
 

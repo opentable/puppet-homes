@@ -92,7 +92,15 @@ The full path directory to the keystore where all the public keys and other secr
 
 ##Limitations
 
-This module is CI tested on Centos 6, Ubuntu 12.04 with OSS version Puppet only.
+This module is tested on the following platforms:
+
+* CentOS 5
+* CentOS 6
+* Ubuntu 10.04.4
+* Ubuntu 12.04.2
+* Ubuntu 13.10
+
+It is tested with the OSS version of Puppet only.
 
 ##Development
 
@@ -102,12 +110,12 @@ Please read CONTRIBUTING.md for full details on contributing to this project.
 
 ###Running tests
 
-This project contains tests for both [rspec-puppet](http://rspec-puppet.com/) and [rspec-system-puppet](https://github.com/puppetlabs/rspec-system-puppet) to verify functionality. For in-depth information please see their respective documentation.
+This project contains tests for both [rspec-puppet](http://rspec-puppet.com/) and [beaker](https://github.com/puppetlabs/beaker) to verify functionality. For in-depth information please see their respective documentation.
 
 Quickstart:
 
     gem install bundler
     bundle install
     bundle exec rake spec
-	RS_DEBUG=yes bundle exec rspec spec/acceptance
+	BEAKER_DEBUG=yes bundle exec rspec spec/acceptance
 

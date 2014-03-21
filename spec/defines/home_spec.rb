@@ -26,6 +26,7 @@ describe 'homes::home', :type => :define do
         'mode'   => '0600'
       )}
     end
+
   end
 
   context 'remove default groups where not applicable' do
