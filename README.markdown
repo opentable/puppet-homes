@@ -20,7 +20,7 @@ Status](https://secure.travis-ci.org/opentable/puppet-homes.png)](https://secure
 
 ##Module Description
 
-This module provides a simplified way of managing local and system users, their home directory and optionally the distrubition of their public and private ssh keys.
+This module provides a simplified way of managing local and system users, their home directory and optionally the distribution of their public and private ssh keys.
 
 ##Setup
 

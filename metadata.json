@@ -1,7 +1,9 @@
 {
   "operatingsystem_support": [
-    { "operatingsystem": "RedHat" },
-	{ "operatingsystem": "Debian" }
+      { "operatingsystem": "RedHat" },
+      { "operatingsystem": "CentOS" },
+      { "operatingsystem": "Debian" },
+      { "operatingsystem": "Ubuntu" }
   ],
   "requirements": [
     {
@@ -14,7 +16,7 @@
     }
   ],
   "name":         "opentable-homes",
-  "version":      "0.2.0",
+  "version":      "0.2.1",
   "source":       "git://github.com/opentable/puppet-homes.git",
   "author":       "opentable",
   "summary":      "Module for managing local users and ssh keys",
@@ -28,7 +30,7 @@
 	},
     {
         "name": "opentable/altlib",
-        "version_requirement": ">= 0.0.1"
+        "version_requirement": ">= 0.2.0"
     }
   ]
 }
