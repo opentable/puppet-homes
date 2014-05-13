@@ -2,5 +2,6 @@ fixtures:
   repositories:
     stdlib: "https://github.com/puppetlabs/puppetlabs-stdlib.git"
     altltb: "https://github.com/opentable/puppet-altlib.git"
+    augeasproviders: "https://github.com/hercules-team/augeasproviders.git"
   symlinks:
     homes: "#{source_dir}"

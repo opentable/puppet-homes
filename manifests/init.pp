@@ -22,6 +22,11 @@
 # String, default empty. If given, this will be used to populate the authorized_keys
 # file for the given user.
 #
+# [*ssh_key_type*]
+# String, default ssh-rsa. If given, this defined the encryption type used for the key
+#
+# [*ssh_config_entries*]
+# Hash. If given, this will configure the entries in the ~/.ssh/config file
 #
 # === Examples
 #
@@ -32,10 +37,11 @@
 # }
 #
 define homes (
-$user,
-$ssh_key='',
-$ssh_key_type = 'ssh-rsa',
-$ensure='present'
+  $user,
+  $ssh_key='',
+  $ssh_key_type = 'ssh-rsa',
+  $ssh_config_entries = {},
+  $ensure='present'
 ) {
 
     validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")
@@ -56,6 +62,13 @@ $ensure='present'
         username     => $username,
         ssh_key      => $ssh_key,
         ssh_key_type => $ssh_key_type
+      }
+    }
+
+    if !empty($ssh_config_entries) {
+      homes::ssh::config { "ssh_config file for ${username}":
+        username           => $username,
+        ssh_config_entries => $ssh_config_entries
       }
     }
 }

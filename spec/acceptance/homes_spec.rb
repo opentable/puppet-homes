@@ -83,7 +83,45 @@ describe 'homes defintion', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfa
       # Run it twice and test for idempotency
       apply_manifest(pp, :catch_failures => true)
       expect(apply_manifest(pp, :catch_changes => true).exit_code).to be_zero
+    end
 
+    describe file('/home/testuser/.ssh/authorized_keys') do
+      it { should be_file }
+      its(:content) { should include('AAAAB3NzaC1yc2EAAAADAQABAAAAgQC4U/G9Idqy1VvYEDCKg3noVChCbIrJAi0D/qMFoGo0EuupIvPX86/l3T4c3pQxvQdWWdK3hf0quCGtDo7vhBubn1o6Srb6AZuhMvx4ZwYEyg6bcp6UDBRcbfZFq9ea020UwExIjoLUceY2UF0m8mjKmd71kwRy+xPgTPmaxTPwWw==') }
+    end
+  end
+
+  context 'creating a user with ssh_config entries' do
+    it 'should create the ssh_config file' do
+      pp = <<-PP
+      $myuser = {
+        'testuser' => { 'shell' => '/bin/bash' }
+      }
+
+      $entries = {
+        'Host' => { 'ensure' => 'present', 'value' => 'github.com' },
+        'HostName' => { 'ensure' => 'present', 'value' => 'github.com' },
+        'User' => { 'ensure' => 'present', 'value' => 'testuser' },
+        'IdentityFile' => { 'ensure' => 'present', 'value' => '~/.ssh/id_rsa' }
+      }
+
+      homes { 'testuser':
+        user => $myuser,
+        ssh_config_entries => $entries
+      }
+      PP
+
+      # Run it twice and test for idempotency
+      apply_manifest(pp, :catch_failures => true)
+      expect(apply_manifest(pp, :catch_changes => true).exit_code).to be_zero
+    end
+
+    describe file('/home/testuser/.ssh/config') do
+      it { should be_file }
+      its(:content) { should match /Host github.com/ }
+      its(:content) { should match /HostName github.com/ }
+      its(:content) { should match /User testuser/ }
+      its(:content) { should match /IdentityFile ~\/\.ssh\/id_rsa/ }
     end
   end
 end
