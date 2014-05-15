@@ -67,21 +67,21 @@ describe 'homes' do
     end    
   end
 
-  describe 'ensure that we can cannot set a key type other than ssh-rsa or ssh-dsa' do
-    let :title do "testing ssky key type" end
-    let :params do
-      { 'user' =>  myuser, 'ssh_key' => 'wSlD2thaMRreEXOc9vFZd0', 'ssh_key_type' => 'ecdsa-sha2-nistp384' }
-    end
-    let(:facts) {{
-        :osfamily => 'Debian'
-    }}
+  #describe 'ensure that we can cannot set an unknown key type' do
+  #  let :title do "testing ssh key type" end
+  #  let :params do
+  #    { 'user' =>  myuser, 'ssh_key' => 'wSlD2thaMRreEXOc9vFZd0', 'ssh_key_type' => 'ecdsa-sha2-nistp384' }
+  #  end
+  #  let(:facts) {{
+  #      :osfamily => 'Debian'
+  #  }}
 
-    it do
-      expect {
-        should contain_define('homes')
-      }.to raise_error(Puppet::Error) {|e| expect(e.to_s).to match 'Keytype not supported' }
-    end
-
-  end
+  #  it do
+  #    expect {
+  #      should contain_define('homes')
+  #    }.to raise_error(Puppet::Error) {|e| expect(e.to_s).to match 'Keytype not supported' }
+  #  end
+  #
+  #end
   
 end
