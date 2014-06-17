@@ -16,7 +16,7 @@
     }
   ],
   "name":         "opentable-homes",
-  "version":      "0.3.0",
+  "version":      "0.3.1",
   "source":       "git://github.com/opentable/puppet-homes.git",
   "author":       "opentable",
   "summary":      "Module for managing local users and ssh keys",
@@ -26,7 +26,7 @@
   "dependencies": [
     {
 	  "name": "puppetlabs/stdlib",
-	  "version_requirement": ">= 3.0.0"  	
+	  "version_requirement": ">= 3.0.0"
 	},
     {
         "name": "opentable/altlib",

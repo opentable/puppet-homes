@@ -1,3 +1,6 @@
+2014-06-17 0.3.1
+ - fixed bug with ensure=>absent not cleanly removing all resources
+
 2014-05-13 0.3.0
  - support for additional key types
  - support for managing ~/.ssh/config file
