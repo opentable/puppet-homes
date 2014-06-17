@@ -1,5 +1,5 @@
 name          'opentable-homes'
-version       '0.3.0'
+version '0.3.2'
 source        'git://github.com/opentable/puppet-homes.git'
 author        'opentable'
 summary       'Module for managing local users and ssh keys'
