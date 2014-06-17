@@ -49,7 +49,7 @@ define homes (
 
     $username = keys($user)
 
-    homes::home { "create home for ${username}":
+    homes::home { "${username} home is ${ensure}":
       ensure => $ensure,
       user   => $user
     }
@@ -59,6 +59,7 @@ define homes (
       validate_re($ssh_key_type, 'ssh-rsa|ssh-dsa|ssh-ed25519|ecdsa-sha2-nistp256|cdsa-sha2-nistp384|ecdsa-sha2-nistp521|ssh-ed25519', 'Keytype not supported')
 
       homes::ssh::public { "auth_keys for ${username}":
+        ensure       => $ensure,
         username     => $username,
         ssh_key      => $ssh_key,
         ssh_key_type => $ssh_key_type
