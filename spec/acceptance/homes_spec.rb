@@ -6,7 +6,12 @@ describe 'homes defintion', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfa
     it 'should work with no errors' do
       pp = <<-EOS
       $myuser = {
-        'testuser' => { 'shell' => '/bin/bash' }
+        'testuser' => {
+          'shell' => '/bin/bash',
+          'groups' => {
+            'sudo' => ''
+          }
+        }
       }
 
       homes { 'testuser':
@@ -48,7 +53,9 @@ describe 'homes defintion', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfa
           'user' => {
             'testuser' => {
               'shell'  => '/bin/bash',
-              'groups' => ['sudo']
+              'groups' => {
+                'sudo' => ''
+              }
             }
           },
           'ssh_key' => 'AAAAAAwWw==',

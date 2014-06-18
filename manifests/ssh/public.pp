@@ -21,10 +21,10 @@
 # }
 #
 define homes::ssh::public(
-  $ensure,
   $username,
   $ssh_key,
-  $ssh_key_type
+  $ssh_key_type,
+  $ensure = 'present'
 ) {
 
     if $ensure == 'present' {
