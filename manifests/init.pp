@@ -38,7 +38,7 @@ $ssh_key_type = 'ssh-rsa',
 $ensure='present'
 ) {
 
-    validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")
+    validate_re($::osfamily, 'RedHat|Linux|Debian\b', "${::operatingsystem} not supported")
     validate_hash($user)
 
     $username = keys($user)

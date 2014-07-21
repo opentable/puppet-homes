@@ -25,7 +25,7 @@ define homes::home(
       $new_groups = delete(sub_item(sub_item($user, $username),'groups'),'wheel')
       $new_user = replace_hash($user,{ 'groups' => $new_groups })
     }
-    'RedHat': {
+    'RedHat', 'Linux': {
       $new_groups = delete(sub_item(sub_item($user, $username),'groups'),'sudo')
       $new_user = replace_hash($user,{ 'groups' => $new_groups })
     }
