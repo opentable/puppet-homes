@@ -3,11 +3,11 @@ require 'spec_helper'
 describe 'homes' do
 
   myuser = {
-    'testuser' => { 'groups' => { 'testgroup1' => '', 'testgroup2' => '' } }
+    'testuser' => {'groups' => {'testgroup1' => '', 'testgroup2' => '' } }
   }
 
   context 'supported operating systems' do
-    ['Debian', 'RedHat'].each do |osfamily|
+    ['Debian', 'RedHat', 'Linux'].each do |osfamily|
       describe "homes class without any parameters on #{osfamily}" do
         let(:title) { "supported os" }
         let :params do
@@ -16,6 +16,8 @@ describe 'homes' do
         let(:facts) {{
           :osfamily => osfamily,
         }}
+
+
 
         it { should compile.with_all_deps }
       end
@@ -48,6 +50,7 @@ describe 'homes' do
       }}
 
       it { should contain_homes__home('testuser home is present') }
+
       it { should contain_homes__ssh__public('auth_keys for testuser') }
     end
   end
@@ -63,25 +66,9 @@ describe 'homes' do
       }}
 
       it { should contain_homes__home('testuser home is present') }
+
       it { should_not contain_homes__ssh__public('auth_keys for testuser') }
     end
   end
-
-  #describe 'ensure that we can cannot set an unknown key type' do
-  #  let :title do "testing ssh key type" end
-  #  let :params do
-  #    { 'user' =>  myuser, 'ssh_key' => 'wSlD2thaMRreEXOc9vFZd0', 'ssh_key_type' => 'ecdsa-sha2-nistp384' }
-  #  end
-  #  let(:facts) {{
-  #      :osfamily => 'Debian'
-  #  }}
-
-  #  it do
-  #    expect {
-  #      should contain_define('homes')
-  #    }.to raise_error(Puppet::Error) {|e| expect(e.to_s).to match 'Keytype not supported' }
-  #  end
-  #
-  #end
 
 end

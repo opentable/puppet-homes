@@ -22,12 +22,11 @@ define homes::home(
   # Squash groups hash into array.
   # Hiera does not support deep merging arrays so we need to have groups specified
   # as a hash and they squash it into an array for use by the user resource.
-  
   $old_groups = sub_item(sub_item($user, $username),'groups')
 
   if $old_groups {
-     $group_array = keys($old_groups)
-     $nw = replace_hash($user,{ 'groups' => $group_array })
+    $group_array = keys($old_groups)
+    $nw = replace_hash($user,{ 'groups' => $group_array })
   } else {
     $nw = $user
   }
@@ -38,7 +37,7 @@ define homes::home(
       $new_groups = delete(sub_item(sub_item($user, $username),'groups'),'wheel')
       $new_user = replace_hash($nw,{ 'groups' => $new_groups })
     }
-    'RedHat': {
+    'RedHat', 'Linux': {
       $new_groups = delete(sub_item(sub_item($user, $username),'groups'),'sudo')
       $new_user = replace_hash($nw,{ 'groups' => $new_groups })
     }
