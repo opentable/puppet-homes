@@ -20,7 +20,7 @@ Status](https://secure.travis-ci.org/opentable/puppet-homes.png)](https://secure
 
 ##Module Description
 
-This module provides a simplified way of managing local and system users, their home directory and optionally the distrubition of their public and private ssh keys.
+This module provides a simplified way of managing local and system users, their home directory and optionally the distribution of their public and private ssh keys.
 
 ##Setup
 
@@ -67,7 +67,7 @@ A hash giving details of the user that will be managed.
 The ssh_key is the one-line contents of the users public key. This will be used to populate the authorized_keys file in the .ssh directory of the users home directory.
 
 ####Defined Type: `homes::ssh::private`
-The type for managing the distrubution of private keys from an existing key store.
+The type for managing the distribution of private keys from an existing key store.
 
 **Parameters within `homes::ssh::private`:**
 #####`username`
@@ -79,12 +79,23 @@ The name of the private key as found in the existing key store.
 #####`key_store`
 The full path directory to the keystore where all the public keys and other secrets are located.
 
+####Defined Type: `homes::ssh::config`
+The type for managing the ssh config options for the user.
+
+**Parameters within `homes::ssh::private`:**
+#####`username`
+The name of the user that is being managed by this module.
+
+#####`ssh_config_entries`
+A hash giving configuration details that will be set in the `~/.ssh/config` file
+
 ##Reference
 
 ###Defined Types
 ####Public Types
 * [`homes`](#defined-homes): Guides the basic management of users.
 * [`homes::ssh::private`](#defined-sshprivate): Management of a users private ssh key.
+* [`homes::ssh::config`](#defined-sshconfig): Management of a users ssh config file.
 
 ####Private Types
 * [`homes::home`](#defined-home): Create the user and manage the home directory.
@@ -96,7 +107,6 @@ This module is tested on the following platforms:
 
 * CentOS 5
 * CentOS 6
-* Ubuntu 10.04.4
 * Ubuntu 12.04.2
 * Ubuntu 13.10
 

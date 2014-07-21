@@ -23,28 +23,37 @@
 define homes::ssh::public(
   $username,
   $ssh_key,
-  $ssh_key_type
+  $ssh_key_type,
+  $ensure = 'present'
 ) {
 
-    file { "/home/${username}/.ssh":
-      ensure  => directory,
-      owner   => $username,
-      mode    => '0600',
-      require => File["/home/${username}"]
-    }
+    if $ensure == 'present' {
+      file { "/home/${username}/.ssh":
+        ensure  => directory,
+        owner   => $username,
+        mode    => '0600',
+        require => File["/home/${username}"]
+      }
 
-    ssh_authorized_key { $username:
-      ensure  => present,
-      key     => $ssh_key,
-      target  => "/home/${username}/.ssh/authorized_keys",
-      type    => $ssh_key_type,
-      user    => $username,
-      require => File["/home/${username}/.ssh"]
-    }
+      ssh_authorized_key { $username:
+        ensure  => present,
+        key     => $ssh_key,
+        target  => "/home/${username}/.ssh/authorized_keys",
+        type    => $ssh_key_type,
+        user    => $username,
+        require => File["/home/${username}/.ssh"]
+      }
 
-    file { "/home/${username}/.ssh/authorized_keys":
-      ensure  => present,
-      owner   => $username,
-      mode    => '0600'
+      file { "/home/${username}/.ssh/authorized_keys":
+        ensure  => present,
+        owner   => $username,
+        mode    => '0600'
+      }
+    } else {
+      file { "/home/${username}/.ssh":
+        ensure => absent,
+        force  => true,
+        backup => false
+      }
     }
 }

@@ -1,3 +1,13 @@
+2014-06-17 0.3.1
+ - fixed bug with ensure=>absent not cleanly removing all resources
+
+2014-05-13 0.3.0
+ - support for additional key types
+ - support for managing ~/.ssh/config file
+
+2014-04-07 0.2.1
+- updated the altlib dependency
+
 2014-03-21 0.2.0
 - fixed issue with sudo/wheel groups being applied on different operating systems
 - adding support for dsa keys

@@ -5,7 +5,7 @@ describe 'homes::home', :type => :define do
   context 'manage the users' do
 
     myuser = {
-        'testuser' => { 'groups' => ['testgroup1', 'testgroup2'] }
+      'testuser' => {'groups' => {'testgroup1' => '', 'testgroup2' => '' } }
     }
 
     describe 'ensure that the user and home directory exists' do
@@ -31,7 +31,7 @@ describe 'homes::home', :type => :define do
 
   context 'remove default groups where not applicable' do
     myuser = {
-        'testuser' => { 'ensure' => 'present', 'groups' => ['sudo', 'wheel'] }
+        'testuser' => { 'ensure' => 'present', 'groups' => {'sudo' => '', 'wheel' => '' }}
     }
 
     describe 'ensure that the sudo group is not applied to the user on Amazon Linux' do
