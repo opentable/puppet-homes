@@ -29,7 +29,7 @@ define homes::home(
   $old_groups = sub_item(sub_item($user, $username),'groups')
 
   if $old_groups {
-    $group_array = keys($old_groups)
+    $group_array = sort(keys($old_groups))
     $nw = replace_hash($user,{ 'groups' => $group_array })
   } else {
     $nw = $user
