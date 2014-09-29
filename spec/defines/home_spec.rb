@@ -10,8 +10,8 @@ describe 'homes::home', :type => :define do
 
     describe 'ensure that the user and home directory exists' do
 
-      let :title { "user exists" }
-      let :params {{
+      let(:title) { "user exists" }
+      let(:params) {{
         'user' =>  myuser
       }}
       let(:facts) {{
@@ -39,8 +39,8 @@ describe 'homes::home', :type => :define do
     }
 
     describe 'ensure that the sudo group is not applied to the user on Amazon Linux' do
-      let :title { "user exists" }
-      let :params {{
+      let(:title) { "user exists" }
+      let(:params) {{
         'user' =>  myuser
       }}
       let(:facts) {{
@@ -55,8 +55,8 @@ describe 'homes::home', :type => :define do
     end
 
     describe 'ensure that the sudo group is not applied to the user on centos' do
-      let :title { "user exists" }
-      let :params {{
+      let(:title) { "user exists" }
+      let(:params) {{
         'user' =>  myuser
       }}
       let(:facts) {{
@@ -71,8 +71,8 @@ describe 'homes::home', :type => :define do
     end
 
     describe 'ensure that the wheel group is not applied to the user on ubuntu' do
-      let :title { "user exists" }
-      let :params {{
+      let(:title) { "user exists" }
+      let(:params) {{
         'user' =>  myuser
       }}
       let(:facts) {{
