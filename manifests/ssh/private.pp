@@ -1,3 +1,7 @@
+# Author::    Liam Bennett  (mailto:lbennett@opentable.com)
+# Copyright:: Copyright (c) 2013 OpenTable Inc
+# License::   MIT
+
 # == Define Resource Type: homes::ssh::private
 #
 # This definition will manage the distrubution of a private key for a given

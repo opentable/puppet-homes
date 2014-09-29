@@ -1,3 +1,7 @@
+# Author::    Liam Bennett  (mailto:lbennett@opentable.com)
+# Copyright:: Copyright (c) 2013 OpenTable Inc
+# License::   MIT
+
 # == Define Resource Type: homes
 #
 # This will create a local system user and manage their home directory.
