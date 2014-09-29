@@ -57,9 +57,9 @@ define homes::home(
     create_resources(user, $new_user)
 
     file { "/home/${username}":
-      ensure  => directory,
-      owner   => $username,
-      mode    => '0600'
+      ensure => directory,
+      owner  => $username,
+      mode   => '0600'
     }
 
   } else {

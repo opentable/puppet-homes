@@ -49,9 +49,9 @@ define homes::ssh::public(
       }
 
       file { "/home/${username}/.ssh/authorized_keys":
-        ensure  => present,
-        owner   => $username,
-        mode    => '0600'
+        ensure => present,
+        owner  => $username,
+        mode   => '0600'
       }
     } else {
       file { "/home/${username}/.ssh":
