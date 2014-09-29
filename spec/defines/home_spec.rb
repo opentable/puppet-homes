@@ -10,15 +10,19 @@ describe 'homes::home', :type => :define do
 
     describe 'ensure that the user and home directory exists' do
 
-      let :title do "user exists" end
-      let :params do
-        { 'user' =>  myuser }
-      end
+      let :title { "user exists" }
+      let :params {{
+        'user' =>  myuser
+      }}
+      let(:facts) {{
+        :osfamily  => 'Debian'
+      }}
+
       it { should compile.with_all_deps }
 
       it { should contain_user('testuser').with(
         'groups' => ['testgroup1', 'testgroup2']
-      ) }
+      )}
 
       it { should contain_file('/home/testuser').with(
         'ensure' => 'directory',
@@ -35,48 +39,51 @@ describe 'homes::home', :type => :define do
     }
 
     describe 'ensure that the sudo group is not applied to the user on Amazon Linux' do
-      let(:facts) { {
-          :osfamily  => 'RedHat'
-      } }
-      let :title do "user exists" end
-      let :params do
-        { 'user' =>  myuser }
-      end
+      let :title { "user exists" }
+      let :params {{
+        'user' =>  myuser
+      }}
+      let(:facts) {{
+        :osfamily  => 'RedHat'
+      }}
+
       it { should compile.with_all_deps }
 
       it { should contain_user('testuser').with(
         'groups' => ['wheel']
-      ) }
+      )}
     end
 
     describe 'ensure that the sudo group is not applied to the user on centos' do
-      let(:facts) { {
-          :osfamily  => 'Linux'
-      } }
-      let :title do "user exists" end
-      let :params do
-        { 'user' =>  myuser }
-      end
+      let :title { "user exists" }
+      let :params {{
+        'user' =>  myuser
+      }}
+      let(:facts) {{
+        :osfamily  => 'Linux'
+      }}
+
       it { should compile.with_all_deps }
 
       it { should contain_user('testuser').with(
         'groups' => ['wheel']
-      ) }
+      )}
     end
 
     describe 'ensure that the wheel group is not applied to the user on ubuntu' do
-      let(:facts) { {
-          :osfamily  => 'Debian'
-      } }
-      let :title do "user exists" end
-      let :params do
-        { 'user' =>  myuser }
-      end
+      let :title { "user exists" }
+      let :params {{
+        'user' =>  myuser
+      }}
+      let(:facts) {{
+        :osfamily  => 'Debian'
+      }}
+
       it { should compile.with_all_deps }
 
       it { should contain_user('testuser').with(
         'groups' => ['sudo']
-      ) }
+      )}
     end
   end
 
