@@ -35,7 +35,7 @@ describe 'homes' do
         :operatingsystem => 'Nexenta',
       }}
 
-      it { expect { should have_resource_count(1) }.to raise_error(Puppet::Error, /Nexenta not supported/) }
+      it { expect { should have_resource_count(1) }.to raise_error(Puppet::Error, /Solaris not supported/) }
     end
   end
 
