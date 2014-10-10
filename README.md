@@ -17,8 +17,7 @@
 
 The homes module allows you to create local system users and optionally manage their ssh keys
 
-[![Build
-Status](https://secure.travis-ci.org/opentable/puppet-homes.png)](https://secure.travis-ci.org/opentable/puppet-homes.png)
+[![Build Status](https://secure.travis-ci.org/opentable/puppet-homes.png)](https://secure.travis-ci.org/opentable/puppet-homes.png)
 
 ##Module Description
 
