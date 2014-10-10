@@ -1,3 +1,18 @@
+##2014-10-10 - Release 1.0.0
+###Summary
+
+This release is focused on bring the module up to a recognized standard.
+It it mainly focused on documentation and testing.
+
+####Features
+
+- Improved documentation
+- Added support for Amazon Linux
+
+####Bugfixes
+
+- Fixed tests in newer versions of puppet
+
 ##2014-06-17 - Release 0.3.1
 ###Summary
 

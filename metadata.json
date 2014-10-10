@@ -1,12 +1,12 @@
 {
   "name":         "opentable-homes",
-  "version":      "0.3.1",
+  "version":      "1.0.0",
   "author":       "opentable",
   "license":      "MIT",
   "summary":      "A nodule for managing local users and ssh keys",
   "source":       "https://github.com/opentable/puppet-homes.git",
   "project_page": "https://github.com/opentable/puppet-homes",
-  "issues_url": "https://github.com/opentable/puppet-homes/issues",
+  "issues_url":   "https://github.com/opentable/puppet-homes/issues",
   "operatingsystem_support": [
       {
         "operatingsystem": "RedHat",
