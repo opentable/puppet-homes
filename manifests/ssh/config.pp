@@ -52,5 +52,5 @@ define homes::ssh::config(
   $config_defaults = {
     'target' => "/home/${username}/.ssh/config"
   }
-  create_resources('sshd_config', $ssh_config_entries, $config_defaults)
+  create_resources('ssh_config', $ssh_config_entries, $config_defaults)
 }
