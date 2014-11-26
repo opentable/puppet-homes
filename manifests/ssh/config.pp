@@ -32,8 +32,15 @@
 #
 define homes::ssh::config(
   $username,
+  $home,
   $ssh_config_entries = {}
 ) {
+
+  if "x${home}x" == 'xx' {
+    $homedir = "/home/${username}"
+  } else {
+    $homedir = $home
+  }
 
   case $::osfamily {
     'Debian': {
@@ -47,10 +54,10 @@ define homes::ssh::config(
     }
   }
 
-  ensure_resource('file', "/home/${username}/.ssh/config", { 'ensure' => 'present' })
+  ensure_resource('file', "${homedir}/.ssh/config", { 'ensure' => 'present' })
 
   $config_defaults = {
-    'target' => "/home/${username}/.ssh/config"
+    'target' => "${homedir}/.ssh/config"
   }
   create_resources('ssh_config', $ssh_config_entries, $config_defaults)
 }

@@ -32,14 +32,21 @@
 #
 define homes::ssh::private(
   $username,
+  $home,
   $key_store,
   $key_name = $name
 ) {
 
-    file { "/home/${username}/.ssh/${key_name}":
-      ensure  => present,
-      source  => "${key_store}/${key_name}",
-      mode    => '0600',
-      require => File["/home/${username}/.ssh"]
-    }
+  if "x${home}x" == 'xx' {
+    $homedir = "/home/${username}"
+  } else {
+    $homedir = $home
+  }
+
+  file { "${homedir}/.ssh/${key_name}":
+    ensure  => present,
+    source  => "${key_store}/${key_name}",
+    mode    => '0600',
+    require => File["${homedir}/.ssh"]
+  }
 }

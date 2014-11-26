@@ -6,7 +6,7 @@ describe 'homes::ssh::public', :type => :define do
     describe 'ensure the .ssh directory exists' do
       let :title do "directory exists" end
       let :params do
-        { 'username' =>  'testuser', 'ssh_key' => 'xxxxx', 'ssh_key_type' => 'ssh-rsa' }
+        { 'username' => 'testuser', 'home' => '', 'ssh_key' => 'xxxxx', 'ssh_key_type' => 'ssh-rsa' }
       end
 
       it { should contain_file('/home/testuser/.ssh').with(
@@ -20,7 +20,7 @@ describe 'homes::ssh::public', :type => :define do
     describe 'ensure that the ssh-rsa public key exists' do
       let :title do "key exists" end
       let :params do
-        { 'username' =>  'testuser', 'ssh_key' => 'xxxxx', 'ssh_key_type' => 'ssh-rsa' }
+        { 'username' => 'testuser', 'home' => '', 'ssh_key' => 'xxxxx', 'ssh_key_type' => 'ssh-rsa' }
       end
 
       it { should contain_ssh_authorized_key('testuser').with(
@@ -41,7 +41,7 @@ describe 'homes::ssh::public', :type => :define do
     describe 'ensure that the ssh-dsa public key exists' do
       let :title do "key exists" end
       let :params do
-        { 'username' =>  'testuser', 'ssh_key' => 'xxxxx', 'ssh_key_type' => 'ssh-dsa' }
+        { 'username' => 'testuser', 'home' => '', 'ssh_key' => 'xxxxx', 'ssh_key_type' => 'ssh-dsa' }
       end
 
       it { should contain_ssh_authorized_key('testuser').with(

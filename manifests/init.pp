@@ -52,6 +52,14 @@ define homes (
     validate_hash($user)
 
     $username = keys($user)
+    $user_values = values($user)
+    $home = inline_template('<%= @user_values[0][\'home\'] -%>')
+
+    if "x${home}x" == 'xx' {
+      $home_dir = "/home/${username}"
+    } else {
+      $home_dir = $home
+    }
 
     homes::home { "${username} home is ${ensure}":
       ensure => $ensure,
@@ -65,6 +73,7 @@ define homes (
       homes::ssh::public { "auth_keys for ${username}":
         ensure       => $ensure,
         username     => $username,
+        home         => $home_dir,
         ssh_key      => $ssh_key,
         ssh_key_type => $ssh_key_type
       }
@@ -73,6 +82,7 @@ define homes (
     if !empty($ssh_config_entries) {
       homes::ssh::config { "ssh_config file for ${username}":
         username           => $username,
+        home               => $home_dir,
         ssh_config_entries => $ssh_config_entries
       }
     }

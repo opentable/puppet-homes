@@ -26,38 +26,45 @@
 #
 define homes::ssh::public(
   $username,
+  $home,
   $ssh_key,
   $ssh_key_type,
   $ensure = 'present'
 ) {
 
-    if $ensure == 'present' {
-      file { "/home/${username}/.ssh":
-        ensure  => directory,
-        owner   => $username,
-        mode    => '0600',
-        require => File["/home/${username}"]
-      }
+  if "x${home}x" == 'xx' {
+    $homedir = "/home/${username}"
+  } else {
+    $homedir = $home
+  }
 
-      ssh_authorized_key { $username:
-        ensure  => present,
-        key     => $ssh_key,
-        target  => "/home/${username}/.ssh/authorized_keys",
-        type    => $ssh_key_type,
-        user    => $username,
-        require => File["/home/${username}/.ssh"]
-      }
-
-      file { "/home/${username}/.ssh/authorized_keys":
-        ensure => present,
-        owner  => $username,
-        mode   => '0600'
-      }
-    } else {
-      file { "/home/${username}/.ssh":
-        ensure => absent,
-        force  => true,
-        backup => false
-      }
+  if $ensure == 'present' {
+    file { "${homedir}/.ssh":
+      ensure  => directory,
+      owner   => $username,
+      mode    => '0600',
+      require => File[$homedir]
     }
+
+    ssh_authorized_key { $username:
+      ensure  => present,
+      key     => $ssh_key,
+      target  => "${homedir}/.ssh/authorized_keys",
+      type    => $ssh_key_type,
+      user    => $username,
+      require => File["${homedir}/.ssh"]
+    }
+
+    file { "${homedir}/.ssh/authorized_keys":
+      ensure => present,
+      owner  => $username,
+      mode   => '0600'
+    }
+  } else {
+    file { "${homedir}/.ssh":
+      ensure => absent,
+      force  => true,
+      backup => false
+    }
+  }
 }

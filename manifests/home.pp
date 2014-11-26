@@ -22,6 +22,13 @@ define homes::home(
 ) {
 
   $username = join(keys($user),',')
+  $home = sub_item(sub_item($user, $username),'home')
+
+  if "x${home}x" == 'xx' {
+    $homedir = "/home/${username}"
+  } else {
+    $homedir = $home
+  }
 
   # Squash groups hash into array.
   # Hiera does not support deep merging arrays so we need to have groups specified
@@ -50,13 +57,11 @@ define homes::home(
     }
   }
 
-  #notify { "new_user is ${new_user}": }
-
   if $ensure == 'present' {
 
     create_resources(user, $new_user)
 
-    file { "/home/${username}":
+    file { $homedir:
       ensure => directory,
       owner  => $username,
       mode   => '0600'
@@ -68,7 +73,7 @@ define homes::home(
       ensure => absent
     }
 
-    file { "/home/${username}":
+    file { $homedir:
       ensure => absent,
       force  => true,
       backup => false
