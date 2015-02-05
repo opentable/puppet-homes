@@ -16,10 +16,7 @@ group :development, :test do
 
   gem 'rake',                                                                    :require => false
   gem 'puppet-lint',                                                             :require => false
-  gem 'rspec-puppet',
-    :git => 'https://github.com/rodjek/rspec-puppet.git',
-    :ref => '',
-    :require => false
+  gem 'rspec-puppet', '2.0.0',                                                   :require => false
   gem 'puppet-syntax',                                                           :require => false
   gem 'puppetlabs_spec_helper',                                                  :require => false
   gem 'rspec',                                                                   :require => false

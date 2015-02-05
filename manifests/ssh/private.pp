@@ -32,9 +32,9 @@
 #
 define homes::ssh::private(
   $username,
-  $home,
   $key_store,
-  $key_name = $name
+  $key_name = $name,
+  $home = ''
 ) {
 
   if "x${home}x" == 'xx' {
