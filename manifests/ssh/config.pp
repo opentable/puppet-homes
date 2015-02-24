@@ -59,5 +59,5 @@ define homes::ssh::config(
   $config_defaults = {
     'target' => "${homedir}/.ssh/config"
   }
-  create_resources('ssh_config', $ssh_config_entries, $config_defaults)
+  #create_resources('ssh_config', $ssh_config_entries, $config_defaults)
 }
