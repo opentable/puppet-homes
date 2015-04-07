@@ -48,7 +48,7 @@ define homes (
   $ensure='present'
 ) {
 
-    validate_re($::osfamily, 'RedHat|Linux|Debian\b', "${::osfamily} not supported")
+    validate_re(downcase($::osfamily), [ 'redhat', 'linux', 'debian' ], "${::osfamily} not supported")
     validate_hash($user)
 
     $username = keys($user)
