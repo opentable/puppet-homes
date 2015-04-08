@@ -33,7 +33,8 @@
 define homes::ssh::config(
   $username,
   $home,
-  $ssh_config_entries = {}
+  $ssh_config_entries = {},
+  $ruby_augeas_version = '0.5.0'
 ) {
 
   if "x${home}x" == 'xx' {
@@ -44,7 +45,21 @@ define homes::ssh::config(
 
   case $::osfamily {
     'Debian': {
-      ensure_resource('package', 'libaugeas-ruby', { 'ensure' => 'installed' })
+      $ruby_version_array = split($::rubyversion, '[.]')
+      if $ruby_version_array[0] >= 2 {
+        package { ['pkg-config', 'libaugeas-dev']:
+          ensure => present,
+          before => Package['ruby-augeas']
+        }
+
+        package { 'ruby-augeas':
+          ensure   => present,
+          provider => 'gem',
+          install_options => "-v ${$ruby_augeas_version}"
+        }
+      } else {
+        ensure_resource('package', 'libaugeas-ruby', { 'ensure' => 'installed' })
+      }
     }
     'RedHat': {
       ensure_resource('package', 'ruby-augeas', { 'ensure' => 'installed' })
