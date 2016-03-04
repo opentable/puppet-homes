@@ -29,6 +29,10 @@
 # [*ssh_key_type*]
 # String, default ssh-rsa. If given, this defined the encryption type used for the key
 #
+# [*ssh_key_options*]
+# String or Array of Strings if mutiple. If given, this will add those strings as
+# options to the ssh key in the authorized_keys file.  See AUTHORIZED_KEYS in "man sshd" 
+#
 # [*ssh_config_entries*]
 # Hash. If given, this will configure the entries in the ~/.ssh/config file
 #
@@ -44,6 +48,7 @@ define homes (
   $user,
   $ssh_key='',
   $ssh_key_type = 'ssh-rsa',
+  $ssh_key_options = undef,
   $ssh_config_entries = {},
   $ensure='present'
 ) {
@@ -71,11 +76,12 @@ define homes (
       validate_re($ssh_key_type, 'ssh-rsa|ssh-dsa|ssh-ed25519|ecdsa-sha2-nistp256|cdsa-sha2-nistp384|ecdsa-sha2-nistp521|ssh-ed25519', 'Keytype not supported')
 
       homes::ssh::public { "auth_keys for ${username}":
-        ensure       => $ensure,
-        username     => $username,
-        home         => $home_dir,
-        ssh_key      => $ssh_key,
-        ssh_key_type => $ssh_key_type
+        ensure          => $ensure,
+        username        => $username,
+        home            => $home_dir,
+        ssh_key         => $ssh_key,
+        ssh_key_type    => $ssh_key_type,
+        ssh_key_options => $ssh_key_options,
       }
     }
 
