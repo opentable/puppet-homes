@@ -1,3 +1,17 @@
+##2016-08-31 - Release 2.0.0
+###Summary
+
+Focused on fixing the module to work with future parser.
+
+####Features
+
+- Support future parser.
+- Modified format of user parameter, username is the resource title and not the key from the user hash.
+
+####Bugfixes
+
+- Fix module to accept groups as array as per documentation.
+
 ##2014-10-10 - Release 1.0.0
 ###Summary
 

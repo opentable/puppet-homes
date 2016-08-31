@@ -3,21 +3,19 @@ require 'spec_helper'
 describe 'homes' do
 
   myuser = {
-    'testuser' => {'groups' => {'testgroup1' => '', 'testgroup2' => '' } }
+    'groups' => {'testgroup1' => '', 'testgroup2' => '' }
   }
 
   context 'supported operating systems' do
     ['Debian', 'RedHat', 'Linux'].each do |osfamily|
       describe "homes class without any parameters on #{osfamily}" do
-        let(:title) { "supported os" }
+        let(:title) { 'testuser' }
         let :params do
           { 'user' =>  myuser, 'ssh_key' => 'xxx' }
         end
         let(:facts) {{
           :osfamily => osfamily,
         }}
-
-
 
         it { should compile.with_all_deps }
       end
@@ -26,7 +24,7 @@ describe 'homes' do
 
   context 'unsupported operating system' do
     describe 'homes class without any parameters on Solaris/Nexenta' do
-      let(:title) { "unsupported os" }
+      let(:title) { 'testuser' }
       let :params do
         { 'user' =>  myuser, 'ssh_key' => 'xxx' }
       end
@@ -41,7 +39,7 @@ describe 'homes' do
 
   context 'configure the user and public key' do
     describe 'pass variables to homes::home' do
-      let(:title) { "configure the user and public key" }
+      let(:title) { 'testuser' }
       let :params do
         { 'user' =>  myuser, 'ssh_key' => 'xxx' }
       end
@@ -57,7 +55,7 @@ describe 'homes' do
 
   context 'configure the user without a public key' do
     describe 'pass variables to homes::home' do
-      let(:title) { "configure the user without a public key" }
+      let(:title) { 'testuser' }
       let :params do
         { 'user' =>  myuser }
       end

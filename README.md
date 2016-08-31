@@ -37,7 +37,7 @@ To create a new local user:
 
 ```puppet
    $myuser = {
-     'testuser' => { 'groups' => ['testgroup1', 'testgroup2'] }
+     'groups' => ['testgroup1', 'testgroup2']
    }
 
    homes { 'testuser':

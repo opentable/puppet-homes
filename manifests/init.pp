@@ -31,7 +31,7 @@
 #
 # [*ssh_key_options*]
 # String or Array of Strings if mutiple. If given, this will add those strings as
-# options to the ssh key in the authorized_keys file.  See AUTHORIZED_KEYS in "man sshd" 
+# options to the ssh key in the authorized_keys file.  See AUTHORIZED_KEYS in "man sshd"
 #
 # [*ssh_config_entries*]
 # Hash. If given, this will configure the entries in the ~/.ssh/config file
@@ -56,19 +56,17 @@ define homes (
     validate_re(downcase($::osfamily), [ 'redhat', 'linux', 'debian' ], "${::osfamily} not supported")
     validate_hash($user)
 
-    $username = keys($user)
-    $user_values = values($user)
-    $home = inline_template('<%= @user_values[0][\'home\'] -%>')
-
-    if "x${home}x" == 'xx' {
-      $home_dir = "/home/${username}"
+    $username = $title
+    if has_key($user, 'home') {
+      $home_dir = $user['home']
     } else {
-      $home_dir = $home
+      $home_dir = "/home/${username}"
     }
 
     homes::home { "${username} home is ${ensure}":
-      ensure => $ensure,
-      user   => $user
+      ensure   => $ensure,
+      username => $username,
+      user     => $user,
     }
 
     if $ssh_key != '' {
