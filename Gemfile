@@ -20,7 +20,7 @@ group :development, :test do
   gem 'puppet-syntax',                                                           :require => false
   gem 'puppetlabs_spec_helper',                                                  :require => false
   gem 'rspec',                                                                   :require => false
-  gem 'beaker',                                                                  :require => false
+  gem 'beaker', '1.21.0',                                                        :require => false
   gem 'beaker-rspec',                                                            :require => false
   gem 'serverspec',                                                              :require => false
   gem 'specinfra',                                                               :require => false
@@ -30,6 +30,9 @@ group :development, :test do
   gem 'vagrant-wrapper',                                                         :require => false
   gem 'puppet-blacksmith',                                                       :require => false
   gem 'guard-rake',                                                              :require => false
+
+  gem 'ruby_dep', '~> 1.3.0',                                                    :require => false
+  gem 'listen', '~> 2.8.3',                                                      :require => false
 end
 
 if facterversion = ENV['FACTER_GEM_VERSION']

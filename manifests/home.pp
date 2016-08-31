@@ -17,51 +17,54 @@
 # manage the user.
 #
 define homes::home(
+  $username,
   $user,
   $ensure = 'present'
 ) {
 
-  $username = join(keys($user),',')
-  $home = sub_item(sub_item($user, $username),'home')
-
-  if "x${home}x" == 'xx' {
-    $homedir = "/home/${username}"
+  if has_key($user, 'home') {
+    $home_dir = $user['home']
   } else {
-    $homedir = $home
+    $home_dir = "/home/${username}"
   }
 
   # Squash groups hash into array.
   # Hiera does not support deep merging arrays so we need to have groups specified
   # as a hash and they squash it into an array for use by the user resource.
-  $old_groups = sub_item(sub_item($user, $username),'groups')
+  $old_groups = sub_item($user, 'groups')
 
   if $old_groups {
-    $group_array = sort(keys($old_groups))
-    $nw = replace_hash($user,{ 'groups' => $group_array })
+    if is_hash($old_groups) {
+      $group_array = sort(keys($old_groups))
+    } else {
+      $group_array = sort($old_groups)
+    }
+
+    # Deal with the case where certain groups don't exist on all OS versions
+    case $::osfamily {
+      'Debian': {
+        $new_groups = delete($group_array, 'wheel')
+      }
+      'RedHat', 'Linux': {
+        $new_groups = delete($group_array, 'sudo')
+      }
+      default: {
+        $new_groups = $group_array
+      }
+    }
+
+    $new_user = { "${username}" => replace_hash($user, { 'groups' => $new_groups }) }
   } else {
-    $nw = $user
+    $new_user = { "${username}" => $user }
   }
 
-  # Deal with the case where certain groups don't exist on all OS versions
-  case $::osfamily {
-    'Debian': {
-      $new_groups = delete(sub_item(sub_item($user, $username),'groups'),'wheel')
-      $new_user = replace_hash($nw,{ 'groups' => $new_groups })
-    }
-    'RedHat', 'Linux': {
-      $new_groups = delete(sub_item(sub_item($user, $username),'groups'),'sudo')
-      $new_user = replace_hash($nw,{ 'groups' => $new_groups })
-    }
-    default: {
-      $new_user = $user
-    }
-  }
+
 
   if $ensure == 'present' {
 
     create_resources(user, $new_user)
 
-    file { $homedir:
+    file { $home_dir:
       ensure => directory,
       owner  => $username,
       mode   => '0600'
@@ -73,7 +76,7 @@ define homes::home(
       ensure => absent
     }
 
-    file { $homedir:
+    file { $home_dir:
       ensure => absent,
       force  => true,
       backup => false
