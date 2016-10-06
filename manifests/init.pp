@@ -31,7 +31,7 @@
 #
 # [*ssh_key_options*]
 # String or Array of Strings if mutiple. If given, this will add those strings as
-# options to the ssh key in the authorized_keys file.  See AUTHORIZED_KEYS in "man sshd" 
+# options to the ssh key in the authorized_keys file.  See AUTHORIZED_KEYS in "man sshd"
 #
 # [*ssh_config_entries*]
 # Hash. If given, this will configure the entries in the ~/.ssh/config file
@@ -52,44 +52,49 @@ define homes (
   $ssh_config_entries = {},
   $ensure='present'
 ) {
+  validate_re(downcase($::osfamily), [ 'redhat', 'linux', 'debian' ], "${::osfamily} not supported")
+  validate_hash($user)
 
-    validate_re(downcase($::osfamily), [ 'redhat', 'linux', 'debian' ], "${::osfamily} not supported")
-    validate_hash($user)
+  $user_keys = keys($user)
+  if is_array($user_keys) {
+    $username = $user_keys[0]
+  } else {
+    $username = $user_keys
+  }
 
-    $username = keys($user)
-    $user_values = values($user)
-    $home = inline_template('<%= @user_values[0][\'home\'] -%>')
+  $user_values = values($user)
+  $home = inline_template('<%= @user_values[0][\'home\'] -%>')
 
-    if "x${home}x" == 'xx' {
-      $home_dir = "/home/${username}"
-    } else {
-      $home_dir = $home
+  if "x${home}x" == 'xx' {
+    $home_dir = "/home/${username}"
+  } else {
+    $home_dir = $home
+  }
+
+  homes::home { "${username} home is ${ensure}":
+    ensure => $ensure,
+    user   => $user
+  }
+
+  if $ssh_key != '' {
+    validate_re($ssh_key, '[A-Za-z0-9]', "ssh_key can only contain upper or lowercase strings or numbers. ${ssh_key} is not valid")
+    validate_re($ssh_key_type, 'ssh-rsa|ssh-dsa|ssh-ed25519|ecdsa-sha2-nistp256|cdsa-sha2-nistp384|ecdsa-sha2-nistp521|ssh-ed25519', 'Keytype not supported')
+
+    homes::ssh::public { "auth_keys for ${username}":
+      ensure          => $ensure,
+      username        => $username,
+      home            => $home_dir,
+      ssh_key         => $ssh_key,
+      ssh_key_type    => $ssh_key_type,
+      ssh_key_options => $ssh_key_options,
     }
+  }
 
-    homes::home { "${username} home is ${ensure}":
-      ensure => $ensure,
-      user   => $user
+  if !empty($ssh_config_entries) {
+    homes::ssh::config { "ssh_config file for ${username}":
+      username           => $username,
+      home               => $home_dir,
+      ssh_config_entries => $ssh_config_entries
     }
-
-    if $ssh_key != '' {
-      validate_re($ssh_key, '[A-Za-z0-9]', "ssh_key can only contain upper or lowercase strings or numbers. ${ssh_key} is not valid")
-      validate_re($ssh_key_type, 'ssh-rsa|ssh-dsa|ssh-ed25519|ecdsa-sha2-nistp256|cdsa-sha2-nistp384|ecdsa-sha2-nistp521|ssh-ed25519', 'Keytype not supported')
-
-      homes::ssh::public { "auth_keys for ${username}":
-        ensure          => $ensure,
-        username        => $username,
-        home            => $home_dir,
-        ssh_key         => $ssh_key,
-        ssh_key_type    => $ssh_key_type,
-        ssh_key_options => $ssh_key_options,
-      }
-    }
-
-    if !empty($ssh_config_entries) {
-      homes::ssh::config { "ssh_config file for ${username}":
-        username           => $username,
-        home               => $home_dir,
-        ssh_config_entries => $ssh_config_entries
-      }
-    }
+  }
 }
