@@ -10,6 +10,10 @@ group :test do
     gem 'json_pure', '<= 2.0.1',                                                  :require => false
   end
 
+  if ENV['PUPPET_GEM_VERSION'] =~ /3.4/ && ENV['RUBY_VERSION'] !~ /1.8/
+    gem 'puppet-doc-lint', '~> 0.3',                                              :require => false
+  end
+
   gem 'puppetlabs_spec_helper', '~> 1.2',                                         :require => false
   gem 'puppet-lint', '~> 2.0',                                                    :require => false
   gem 'puppet-syntax', '~> 2.0',                                                  :require => false
