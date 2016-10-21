@@ -36,39 +36,39 @@ define homes::home(
   $old_groups = sub_item(sub_item($user, $username),'groups')
 
   if $old_groups {
-    $group_array = sort(keys($old_groups))
-    $nw = replace_hash($user,{ 'groups' => $group_array })
-  } else {
-    $nw = $user
-  }
+    if is_hash($old_groups) {
+      $group_array = sort(keys($old_groups))
+    } else {
+      $group_array = sort($old_groups)
+    }
 
-  # Deal with the case where certain groups don't exist on all OS versions
-  case $::osfamily {
-    'Debian': {
-      $new_groups = delete(sub_item(sub_item($user, $username),'groups'),'wheel')
-      $new_user = replace_hash($nw,{ 'groups' => $new_groups })
+    # Deal with the case where certain groups don't exist on all OS versions
+    case $::osfamily {
+      'Debian': {
+        $new_groups = delete($group_array, 'wheel')
+      }
+      'RedHat', 'Linux': {
+        $new_groups = delete($group_array, 'sudo')
+      }
+      default: {
+        $new_groups = $group_array
+      }
     }
-    'RedHat', 'Linux': {
-      $new_groups = delete(sub_item(sub_item($user, $username),'groups'),'sudo')
-      $new_user = replace_hash($nw,{ 'groups' => $new_groups })
-    }
-    default: {
-      $new_user = $user
-    }
+
+    $new_user = replace_hash($user, { 'groups' => $new_groups })
+  } else {
+    $new_user = $user
   }
 
   if $ensure == 'present' {
-
     create_resources(user, $new_user)
 
     file { $homedir:
       ensure => directory,
       owner  => $username,
-      mode   => '0600'
+      mode   => '0600',
     }
-
   } else {
-
     user { $username:
       ensure => absent
     }
@@ -76,8 +76,7 @@ define homes::home(
     file { $homedir:
       ensure => absent,
       force  => true,
-      backup => false
+      backup => false,
     }
-
   }
 }
