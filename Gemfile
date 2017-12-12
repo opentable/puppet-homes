@@ -15,7 +15,7 @@ group :test do
   end
 
   gem 'puppetlabs_spec_helper', '~> 1.2',                                         :require => false
-  gem 'puppet-lint', '~> 2.0',                                                    :require => false
+  gem 'puppet-lint', '== 2.0.2',                                                  :require => false
   gem 'puppet-syntax', '~> 2.0',                                                  :require => false
   gem 'rspec-puppet', '~> 2.0',                                                   :require => false
   gem 'puppet-blacksmith', '~> 3.4',                                              :require => false
