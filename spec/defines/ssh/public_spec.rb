@@ -41,14 +41,14 @@ describe 'homes::ssh::public', :type => :define do
     describe 'ensure that the ssh-dsa public key exists' do
       let :title do "key exists" end
       let :params do
-        { 'username' => 'testuser', 'home' => '', 'ssh_key' => 'xxxxx', 'ssh_key_type' => 'ssh-dsa' }
+        { 'username' => 'testuser', 'home' => '', 'ssh_key' => 'xxxxx', 'ssh_key_type' => 'ssh-dss' }
       end
 
       it { should contain_ssh_authorized_key('testuser').with(
         'ensure' => 'present',
         'key' => 'xxxxx',
         'target' => '/home/testuser/.ssh/authorized_keys',
-        'type' => 'ssh-dsa',
+        'type' => 'ssh-dss',
         'user' => 'testuser'
       )}
 
