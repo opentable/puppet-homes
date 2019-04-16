@@ -47,6 +47,7 @@
 define homes (
   $user,
   $ssh_key='',
+  $ssh_keys=[],
   $ssh_key_type = 'ssh-rsa',
   $ssh_key_options = undef,
   $ssh_config_entries = {},
@@ -77,10 +78,14 @@ define homes (
   }
 
   if $ssh_key != '' {
+    $ssh_keys = $ssh_keys + [$ssh_key]
+  }
+
+  $ssh_keys.each |Integer $index, String $ssh_key| {
     validate_re($ssh_key, '[A-Za-z0-9]', "ssh_key can only contain upper or lowercase strings or numbers. ${ssh_key} is not valid")
     validate_re($ssh_key_type, 'ssh-rsa|ssh-dss|ssh-ed25519|ecdsa-sha2-nistp256|cdsa-sha2-nistp384|ecdsa-sha2-nistp521|ssh-ed25519', 'Keytype not supported')
 
-    homes::ssh::public { "auth_keys for ${username}":
+    homes::ssh::public { "auth_key ${index} for ${username}":
       ensure          => $ensure,
       username        => $username,
       home            => $home_dir,
