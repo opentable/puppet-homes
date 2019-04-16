@@ -92,6 +92,7 @@ define homes (
       ssh_key         => $ssh_key,
       ssh_key_type    => $ssh_key_type,
       ssh_key_options => $ssh_key_options,
+      index           => $index,
     }
   }
 
