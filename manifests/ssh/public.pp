@@ -30,6 +30,7 @@ define homes::ssh::public(
   $ssh_key,
   $ssh_key_type,
   $ssh_key_options = undef,
+  $index = 0,
   $ensure = 'present'
 ) {
 
@@ -47,7 +48,7 @@ define homes::ssh::public(
       require => File[$homedir]
     }
 
-    ssh_authorized_key { $username:
+    ssh_authorized_key { "${username}-${index}":
       ensure  => present,
       key     => $ssh_key,
       target  => "${homedir}/.ssh/authorized_keys",
